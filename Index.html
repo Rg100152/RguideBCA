@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RguideBCA – BCA Student Learning Guide</title>
+    <style>
+        /* ========== GLOBAL STYLES ========== */
+        :root {
+            --bg: #f4f6fc;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #f97316;
+            --header-bg: #1e293b;
+            --header-text: #f1f5f9;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.7s ease forwards;
+        }
+
+        .animate-slide-down {
+            animation: slideDown 0.6s ease forwards;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            font-size: 2.2rem;
+            display: inline-block;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--header-text);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.08);
+        }
+
+        nav a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 0 0 50% 50% / 20px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        main {
+            flex: 1;
+            padding: 0 1.5rem 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            cursor: pointer;
+            opacity: 0; /* initially hidden, animation adds it */
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .card .emoji {
+            font-size: 3rem;
+            transition: var(--transition);
+        }
+
+        .card:hover .emoji {
+            animation: pulse 0.5s ease;
+        }
+
+        .card .category-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+        }
+
+        .card p {
+            color: #475569;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.03);
+        }
+
+        /* ========== POST DETAIL ========== */
+        .post-detail {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .post-detail .post-emoji {
+            font-size: 5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-detail h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-detail .meta {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-detail .content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--header-bg);
+            color: #94a3b8;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo animate-float">
+            <span>📘</span> RguideBCA
+        </div>
+        <nav>
+            <a href="?">🏠 Home</a>
+            <a href="?cat=programming">💻 Programming</a>
+            <a href="?cat=web">🌐 Web Dev</a>
+            <a href="?cat=database">🗄️ Database</a>
+            <a href="?cat=tools">🔧 Tools</a>
+            <a href="?cat=softskills">🗣️ Soft Skills</a>
+        </nav>
+    </header>
+
+    <main id="content">
+        <!-- Dynamic content inserted by JS -->
+    </main>
+
+    <footer>
+        © 2026 <strong>RguideBCA</strong> – Made with ❤️ for BCA Students
+    </footer>
+
+    <script>
+        // ===================== POSTS DATA =====================
+        const posts = [
+            {
+                id: 1,
+                title: "Python – Beginner to Advanced",
+                category: "programming",
+                emoji: "🐍",
+                content: `<p>Python ek high-level, interpreted language hai jo BCA students ke liye bahut important hai. Iski simple syntax ki wajah se beginners bhi aasani se seekh sakte hain.</p>
+                <p><strong>Kyun seekhein?</strong> Python data science, machine learning, web development (Django/Flask), automation aur scripting me use hoti hai. BCA ke projects, internships aur placements me Python kaafi helpful hoti hai.</p>
+                <p><strong>Kahan se shuru karein?</strong> Pehle basics – variables, loops, functions, lists, dictionaries. Phir OOP concepts. Uske baad libraries jaise NumPy, Pandas, Matplotlib seekhein. Ek chhota project banayein jaise calculator ya to-do app.</p>`
+            },
+            {
+                id: 2,
+                title: "Java – Industry Standard",
+                category: "programming",
+                emoji: "☕",
+                content: `<p>Java ek object-oriented, platform-independent language hai jo enterprise applications, Android development aur backend systems me widely use hoti hai.</p>
+                <p>BCA course me Java ek core subject hai. Iske strong OOP fundamentals aapko software design patterns sikhate hain. JVM ki wajah se “write once, run anywhere” possible hai.</p>
+                <p><strong>Roadmap:</strong> Core Java (syntax, OOP, exception handling, collections), then Advanced Java (JDBC, Servlets, JSP). Frameworks jaise Spring Boot bhi seekhna beneficial hoga.</p>`
+            },
+            {
+                id: 3,
+                title: "C++ – Foundation of Programming",
+                category: "programming",
+                emoji: "💻",
+                content: `<p>C++ ek powerful language hai jo system programming, game development aur competitive programming me use hoti hai. Ye aapko memory management aur pointers jaise low-level concepts sikhata hai.</p>
+                <p>BCA me DSA (Data Structures & Algorithms) aksar C++ me padhaya jata hai, isliye ye bhaut zaroori hai.</p>
+                <p><strong>Focus areas:</strong> Pointers, dynamic memory allocation, STL (Standard Template Library), OOP, file handling. Competitive programming ke liye C++ fast aur efficient hai.</p>`
+            },
+            {
+                id: 4,
+                title: "JavaScript – Language of the Web",
+                category: "programming",
+                emoji: "📜",
+                content: `<p>JavaScript (JS) web browsers ki native language hai. Iske bina modern web development impossible hai. BCA me front-end aur full-stack projects ke liye ye must hai.</p>
+                <p>Isse aap interactive websites bana sakte hain. Node.js ke through backend bhi JS me ho sakta hai.</p>
+                <p><strong>Kya seekhein:</strong> DOM manipulation, ES6 features (arrow functions, promises, async/await), events. Phir React ya Vue jaise frameworks. Ek quiz app ya weather widget project banayein.</p>`
+            },
+            {
+                id: 5,
+                title: "HTML5 – Structure of the Web",
+                category: "web",
+                emoji: "🌐",
+                content: `<p>HTML (HyperText Markup Language) web pages ki backbone hai. Har BCA student ko iski strong understanding honi chahiye.</p>
+                <p>Semantic HTML5 tags (header, nav, section, article) use karna SEO aur accessibility ke liye important hai. Forms, tables, multimedia embed karna seekhein.</p>
+                <p><strong>Project idea:</strong> Ek personal portfolio page banao jisme headings, images, links, aur contact form ho. HTML ko CSS ke saath milakar design improve karo.</p>`
+            },
+            {
+                id: 6,
+                title: "CSS3 – Styling & Animation",
+                category: "web",
+                emoji: "🎨",
+                content: `<p>CSS (Cascading Style Sheets) se web pages sundar aur responsive bante hain. Bina CSS ke koi bhi professional website nahi ban sakti.</p>
+                <p>Flexbox aur Grid layouts aaj kal har project me use hote hain. Transitions aur animations seekhkar aap user experience behtar bana sakte hain.</p>
+                <p><strong>Practice:</strong> Ek restaurant menu page ya landing page design karo. Mobile-first responsive design implement karo. CSS variables aur preprocessors (SASS) bhi explore karo.</p>`
+            },
+            {
+                id: 7,
+                title: "PHP – Server Side Scripting",
+                category: "web",
+                emoji: "🐘",
+                content: `<p>PHP ek popular server-side language hai jo WordPress, Laravel, aur bahut saare CMS platforms ki backbone hai. BCA ke web development projects me iska use hota hai.</p>
+                <p>MySQL ke saath milkar dynamic websites banayi ja sakti hain. Sessions, cookies, form handling aur CRUD operations seekhna important hai.</p>
+                <p><strong>Mini project:</strong> Ek simple blog ya student management system banao jisme login, register, aur post creation ho.</p>`
+            },
+            {
+                id: 8,
+                title: "React – Modern UI Library",
+                category: "web",
+                emoji: "⚛️",
+                content: `<p>React ek JavaScript library hai jo user interfaces banane ke liye use hoti hai. Industry me iski bahut demand hai aur BCA ke final year projects me iska use impressive lagta hai.</p>
+                <p>Component-based architecture, state management (useState, useEffect), props, aur React Router seekhein. Baad me Redux ya Context API bhi aayega.</p>
+                <p><strong>Beginner project:</strong> Ek e-commerce product listing page ya task tracker app banao. Create React App ya Vite use karo.</p>`
+            },
+            {
+                id: 9,
+                title: "Node.js – JavaScript on Server",
+                category: "web",
+                emoji: "🟢",
+                content: `<p>Node.js JavaScript ko server side par run karne deta hai. Ye fast, scalable, aur event-driven hai. BCA me full-stack projects ke liye ye perfect combination hai (React + Node).</p>
+                <p>Express.js framework ke saath APIs banana seekhein. File system, streams, aur npm packages ki understanding banao.</p>
+                <p><strong>Practice:</strong> Ek REST API banao jo tasks ko create, read, update, delete (CRUD) kare. Postman se test karo.</p>`
+            },
+            {
+                id: 10,
+                title: "SQL & Databases",
+                category: "database",
+                emoji: "🗄️",
+                content: `<p>Database management BCA ka ek core subject hai. SQL (Structured Query Language) seekhkar aap data ko store, query aur manipulate kar sakte hain.</p>
+                <p>MySQL, PostgreSQL jaise RDBMS popular hain. SELECT, JOIN, GROUP BY, subqueries, normalization seekhna zaroori hai.</p>
+                <p><strong>Project idea:</strong> Ek library management system ka database design karo. PhpMyAdmin ya DBeaver se queries run karo.</p>`
+            },
+            {
+                id: 11,
+                title: "Git & GitHub – Version Control",
+                category: "tools",
+                emoji: "📦",
+                content: `<p>Git ek version control system hai jo developers ko code track karne aur collaborate karne me madad karta hai. BCA ke group projects aur industry me ye must-have skill hai.</p>
+                <p>Commands: git init, add, commit, push, pull, branch, merge. GitHub par repositories banana aur open-source contribute karna seekhein.</p>
+                <p><strong>Activity:</strong> Apne sabhi mini projects ko GitHub par upload karo. README.md acche se likho. Ek contribution graph ban jayega jo resume me acha lagta hai.</p>`
+            },
+            {
+                id: 12,
+                title: "Linux Basics",
+                category: "tools",
+                emoji: "🐧",
+                content: `<p>Linux operating system servers aur development environments me dominate karta hai. BCA students ko command line se comfortable hona chahiye.</p>
+                <p>Ubuntu install karo (dual boot ya VM). Terminal commands: ls, cd, mkdir, cp, mv, chmod, grep. Shell scripting bhi seekhna faydemand hai.</p>
+                <p><strong>Task:</strong> Ek bash script likho jo files organize kare. Crontab se automate karo. Cloud servers (AWS EC2) par bhi Linux use hota hai.</p>`
+            },
+            {
+                id: 13,
+                title: "Data Structures & Algorithms",
+                category: "programming",
+                emoji: "📊",
+                content: `<p>DSA har software engineer ke liye backbone hai. BCA placements me coding interviews clear karne ke liye yeh sabse important topic hai.</p>
+                <p>Arrays, linked lists, stacks, queues, trees, graphs, sorting, searching algorithms. Time complexity (Big O) samjho.</p>
+                <p><strong>Resources:</strong> LeetCode, HackerRank, GeeksforGeeks par practice karo. Har roz ek problem solve karo. C++ ya Java me implement karo.</p>`
+            },
+            {
+                id: 14,
+                title: "Computer Networking",
+                category: "programming",
+                emoji: "🌍",
+                content: `<p>Networking concepts jaise OSI model, TCP/IP, HTTP, DNS, routers, switches BCA syllabus ka part hain aur practical knowledge ke liye zaroori hain.</p>
+                <p>Web kaise kaam karta hai, client-server architecture, IP addressing, subnets. Wireshark jaise tools se packet analysis karna seekhein.</p>
+                <p><strong>Mini project:</strong> Ek simple chat application banao (local network) ya socket programming seekho. Cloud aur DevOps ke liye networking base hai.</p>`
+            },
+            {
+                id: 15,
+                title: "Communication & Soft Skills",
+                category: "softskills",
+                emoji: "🗣️",
+                content: `<p>Technical skills ke saath communication, teamwork, aur time management utni hi important hain. BCA ke baad corporate environment me yahi aapko alag banayengi.</p>
+                <p>Presentation dena, emails likhna, group discussions, aur problem-solving attitude develop karo.</p>
+                <p><strong>Activity:</strong> Apne college ke tech fest me volunteer karo. LinkedIn profile banao aur network karo. Ek blog likhna shuru karo (jaise ye RguideBCA!).</p>`
+            },
+            {
+                id: 16,
+                title: "Problem Solving Attitude",
+                category: "softskills",
+                emoji: "🧩",
+                content: `<p>Programming sirf code likhna nahi, samasyaon ka hal nikalna hai. Logical thinking aur patience develop karo.</p>
+                <p>Puzzles, riddles, coding challenges regularly solve karo. Stack Overflow aur documentation padhna seekho.</p>
+                <p><strong>Tip:</strong> Jab bhi error aaye, pehle khud debug karo. "Rubber duck debugging" technique try karo. Dheere-dheere aap expert ban jaoge.</p>`
+            }
+        ];
+
+        // ===================== HELPER FUNCTIONS =====================
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function generatePostLink(id) {
+            return `?post=${id}`;
+        }
+
+        function createCard(post) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-id', post.id);
+            card.innerHTML = `
+                <div class="emoji">${post.emoji}</div>
+                <span class="category-badge">${post.category.toUpperCase()}</span>
+                <h3>${post.title}</h3>
+                <p>${post.content.replace(/<[^>]*>/g, '').substring(0, 120)}...</p>
+                <a href="${generatePostLink(post.id)}" class="btn">Read More →</a>
+            `;
+            // Make whole card clickable except the button (but we'll just use the link)
+            card.addEventListener('click', (e) => {
+                // Prevent if clicking the button or link itself
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+                window.location.href = generatePostLink(post.id);
+            });
+            return card;
+        }
+
+        function renderHome() {
+            const main = document.getElementById('content');
+            // Hero section
+            main.innerHTML = `
+                <div class="hero animate-slide-down">
+                    <h1>📚 BCA Student's Ultimate Learning Roadmap</h1>
+                    <p>RguideBCA – Aapke career ko direction dene wali guide. Har language, har tool, ek jagah.</p>
+                </div>
+                <div class="cards-grid" id="cardsContainer"></div>
+            `;
+            const container = document.getElementById('cardsContainer');
+            posts.forEach((post, index) => {
+                const card = createCard(post);
+                card.style.animationDelay = `${index * 0.05}s`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderCategory(category) {
+            const filtered = posts.filter(p => p.category === category);
+            const main = document.getElementById('content');
+            const categoryNames = {
+                programming: "Programming Languages",
+                web: "Web Development",
+                database: "Database Management",
+                tools: "Tools & Platforms",
+                softskills: "Soft Skills"
+            };
+            main.innerHTML = `
+                <div class="hero animate-slide-down" style="background: linear-gradient(135deg, #0f172a, #334155);">
+                    <h1>📂 ${categoryNames[category] || category.toUpperCase()}</h1>
+                    <p>Total ${filtered.length} posts in this category</p>
+                </div>
+                <a href="?" class="back-link">← Back to Home</a>
+                <div class="cards-grid" id="cardsContainer"></div>
+            `;
+            const container = document.getElementById('cardsContainer');
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="grid-column:1/-1; text-align:center;">No posts found in this category.</p>';
+                return;
+            }
+            filtered.forEach((post, index) => {
+                const card = createCard(post);
+                card.style.animationDelay = `${index * 0.05}s`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderPost(postId) {
+            const id = parseInt(postId);
+            const post = posts.find(p => p.id === id);
+            const main = document.getElementById('content');
+            if (!post) {
+                main.innerHTML = `<div class="post-detail"><h2>Post not found</h2><a href="?" class="back-link">← Back to Home</a></div>`;
+                return;
+            }
+            main.innerHTML = `
+                <a href="?" class="back-link">← Back to Home</a>
+                <div class="post-detail animate-fade-in">
+                    <div class="post-emoji">${post.emoji}</div>
+                    <h2>${post.title}</h2>
+                    <div class="meta">Category: <strong>${post.category.toUpperCase()}</strong></div>
+                    <div class="content">${post.content}</div>
+                    <br>
+                    <a href="?" class="btn">🏠 Back to All Posts</a>
+                </div>
+            `;
+        }
+
+        // ===================== ROUTING =====================
+        function router() {
+            const postParam = getQueryParam('post');
+            const catParam = getQueryParam('cat');
+
+            if (postParam) {
+                renderPost(postParam);
+            } else if (catParam) {
+                const validCategories = ['programming', 'web', 'database', 'tools', 'softskills'];
+                if (validCategories.includes(catParam)) {
+                    renderCategory(catParam);
+                } else {
+                    renderHome();
+                }
+            } else {
+                renderHome();
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', router);
+    </script>
+</body>
+</html>
