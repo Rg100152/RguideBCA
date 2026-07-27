@@ -104,3 +104,5 @@ Feel free to share your feedback or contribute improvements.
 ---
 
 > _"Padhai karo, code karo, RguideBCA follow karo!"_ 🚀
+<img width="1080" height="2022" alt="Screenshot_2026-07-27-14-24-03-75_40deb401b9ffe8e1df2f1cc5ba480b12" src="https://github.com/user-attachments/assets/be57adea-f3fd-44da-8865-ea6b8d6d2bd2" />
+<img width="1078" height="1386" alt="Screenshot_2026-07-27-14-23-48-31_40deb401b9ffe8e1df2f1cc5ba480b12" src="https://github.com/user-attachments/assets/37154bda-7dc7-4785-9d30-3263ebaf1530" />
